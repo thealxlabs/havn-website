@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Do — The Havn Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .pillars { padding:80px 40px; border-bottom:1px solid #1a1a1a; }
+  .pillar { display:grid; grid-template-columns:80px 1fr 1fr; gap:40px; padding:60px 0; border-bottom:1px solid #1a1a1a; align-items:start; }
+  .pillar:last-child { border-bottom:none; }
+  .pillar-num { font-size:0.65rem; letter-spacing:0.15em; color:var(--yellow); font-weight:700; padding-top:6px; }
+  .pillar-title { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; letter-spacing:-0.03em; line-height:1.1; }
+  .pillar-title span { color:var(--yellow); display:block; }
+  .pillar-right p { font-size:0.85rem; line-height:1.8; color:var(--text-dim); margin-bottom:20px; }
+  .pillar-right p strong { color:var(--white); }
+  .pillar-tag { display:inline-block; border:1px solid #2a2a2a; padding:6px 14px; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-dim); margin-top:8px; }
+
+  .not-yet { padding:80px 40px; background:var(--grey); border-bottom:1px solid #1a1a1a; }
+  .not-yet-inner { display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; }
+  .not-yet h2 { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; letter-spacing:-0.03em; line-height:1.1; }
+  .not-yet h2 span { color:var(--yellow); }
+  .not-list { display:flex; flex-direction:column; }
+  .not-item { display:flex; align-items:center; gap:20px; padding:20px 0; border-bottom:1px solid #1a1a1a; font-size:0.82rem; color:var(--text-dim); }
+  .not-item:last-child { border-bottom:none; }
+  .not-icon { width:8px; height:8px; border:1px solid #333; flex-shrink:0; }
+
+  .money { padding:80px 40px; border-bottom:1px solid #1a1a1a; }
+  .money-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:48px; }
+  .money-card { border:1px solid #1a1a1a; padding:40px 32px; background:var(--grey); }
+  .money-step { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--yellow); margin-bottom:16px; }
+  .money-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:12px; letter-spacing:-0.02em; }
+  .money-desc { font-size:0.78rem; color:var(--text-dim); line-height:1.7; }
+
+  .impact { padding:80px 40px; background:var(--grey); border-bottom:1px solid #1a1a1a; }
+  .impact-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:48px; }
+  .impact-card { background:var(--black); border:1px solid #1a1a1a; padding:36px 24px; text-align:center; }
+  .impact-amount { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--yellow); margin-bottom:10px; }
+  .impact-desc { font-size:0.72rem; color:var(--text-dim); line-height:1.5; }
+
+  @media (max-width:768px) {
+    .pillars { padding:60px 20px; }
+    .pillar { grid-template-columns:1fr; gap:20px; }
+    .not-yet { padding:60px 20px; }
+    .not-yet-inner { grid-template-columns:1fr; gap:40px; }
+    .money { padding:60px 20px; }
+    .money-grid { grid-template-columns:1fr; }
+    .impact { padding:60px 20px; }
+    .impact-grid { grid-template-columns:repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">The Havn Project</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="what-we-do.html" class="active">What We Do</a></li>
+    <li><a href="donate.html">Donate</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="donate.html" class="nav-cta">Donate</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-grid"></div>
+  <p class="page-tag">Our Work</p>
+  <h1 class="page-title">What The Havn<br><span>Project does.</span></h1>
+  <p class="page-subtitle">Four focus areas. All starting in Toronto. All built to be honest about where we are.</p>
+</div>
+
+<section class="pillars">
+  <div class="section-label">Focus areas</div>
+
+  <div class="pillar">
+    <div class="pillar-num">01</div>
+    <div class="pillar-title">Food &<br><span>Supplies</span></div>
+    <div class="pillar-right">
+      <p>We organize supply drives and purchase <strong>food, hygiene kits, and warm clothing</strong> for homeless individuals in Toronto. Distributed directly — no middleman.</p>
+      <p>This is the most immediate thing we can do. Someone needs a meal or a warm jacket — we get it to them. No bureaucracy, no waiting list.</p>
+      <span class="pillar-tag">Planning first drive</span>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-num">02</div>
+    <div class="pillar-title">School Tech<br><span>& Supplies</span></div>
+    <div class="pillar-right">
+      <p>We donate <strong>computers, Chromebooks, and school supplies</strong> to under-resourced schools in Toronto. Many schools have aging buildings and outdated technology — students deserve better tools to learn with.</p>
+      <p>We work directly with school administrations to understand what they actually need, then raise funds and deliver. No guessing, no wasted resources.</p>
+      <span class="pillar-tag">Planning first delivery</span>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-num">03</div>
+    <div class="pillar-title">Shelter<br><span>Fundraising</span></div>
+    <div class="pillar-right">
+      <p>We raise funds and donate to <strong>vetted shelters in Toronto</strong>. Shelters have been doing this work for years — we're not here to compete with them, we're here to send them more resources.</p>
+      <p>We haven't partnered with any shelters yet. When we do, we'll list them publicly and show exactly how much we've donated to each one.</p>
+      <span class="pillar-tag">Outreach not started</span>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-num">04</div>
+    <div class="pillar-title">Student<br><span>Support</span></div>
+    <div class="pillar-right">
+      <p>Students facing financial hardship get <strong>school supplies and essentials</strong>. Being broke shouldn't mean falling behind in class or dropping out.</p>
+      <p>This includes students who are homeless or housing-insecure, as well as students from low-income families who can't afford basic supplies.</p>
+      <span class="pillar-tag">Planning phase</span>
+    </div>
+  </div>
+</section>
+
+<section class="impact">
+  <div class="section-label">What donations buy</div>
+  <div class="impact-grid">
+    <div class="impact-card">
+      <div class="impact-amount">$10</div>
+      <p class="impact-desc">Hygiene kit for one person</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-amount">$25</div>
+      <p class="impact-desc">School supplies for one student</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-amount">$50</div>
+      <p class="impact-desc">Backpack, supplies, and materials</p>
+    </div>
+    <div class="impact-card">
+      <div class="impact-amount">$200</div>
+      <p class="impact-desc">One refurbished Chromebook</p>
+    </div>
+  </div>
+</section>
+
+<section class="not-yet">
+  <div class="not-yet-inner">
+    <div>
+      <div class="section-label" style="margin-bottom:24px;">Honest</div>
+      <h2>What we<br><span>haven't done yet.</span></h2>
+      <p style="margin-top:16px;font-size:0.8rem;color:var(--text-dim);line-height:1.7;">We list this so you know exactly where we stand. No pretending.</p>
+    </div>
+    <div class="not-list">
+      <div class="not-item"><div class="not-icon"></div>Completed a supply drive</div>
+      <div class="not-item"><div class="not-icon"></div>Delivered tech to a school</div>
+      <div class="not-item"><div class="not-icon"></div>Partnered with a shelter</div>
+      <div class="not-item"><div class="not-icon"></div>Donated to any organization</div>
+      <div class="not-item"><div class="not-icon"></div>Helped a student with supplies</div>
+      
+    </div>
+  </div>
+</section>
+
+<section class="money">
+  <div class="section-label">How donations work</div>
+  <div class="money-grid">
+    <div class="money-card">
+      <div class="money-step">Step 01</div>
+      <div class="money-title">You donate</div>
+      <p class="money-desc">Donations are processed securely through Stripe directly to The Havn Project. Major cards accepted.</p>
+    </div>
+    <div class="money-card">
+      <div class="money-step">Step 02</div>
+      <div class="money-title">Stripe processes it</div>
+      <p class="money-desc">Stripe deposits funds directly to The Havn Project. Every dollar spent will be published on this site.</p>
+    </div>
+    <div class="money-card">
+      <div class="money-step">Step 03</div>
+      <div class="money-title">We spend it on the mission</div>
+      <p class="money-desc">Funds go to school tech, supplies, shelter donations, or student support. We publish every expense publicly.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="index.html" class="footer-logo">The Havn Project</a>
+  <div class="footer-note">The Havn Project is a youth-led project in Toronto.<br>Donations processed securely via Stripe. </div>
+  <div class="footer-right">Toronto, Canada<br>Est. 2026</div>
+</footer>
+
+</body>
+</html>

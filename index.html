@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Havn Project — Toronto</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:120px 40px 60px; position:relative; overflow:hidden; }
+  .hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(232,255,71,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(232,255,71,0.03) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
+  .hero-tag { font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--yellow); margin-bottom:24px; }
+  .hero-title { font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(3.5rem,10vw,9rem); line-height:0.9; letter-spacing:-0.04em; margin-bottom:40px; }
+  .hero-title span { color:var(--yellow); display:block; }
+  .hero-bottom { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; }
+  .hero-desc { max-width:420px; font-size:0.9rem; line-height:1.7; color:var(--text-dim); }
+  .hero-desc strong { color:var(--white); }
+  .hero-actions { display:flex; flex-direction:column; gap:12px; align-items:flex-end; flex-shrink:0; }
+  .hero-scroll { position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .scroll-line { width:1px; height:40px; background:linear-gradient(var(--yellow),transparent); animation:scrollPulse 2s ease-in-out infinite; }
+  .scroll-label { font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim); }
+
+  .ticker { border-top:1px solid #1f1f1f; border-bottom:1px solid #1f1f1f; background:var(--grey); overflow:hidden; white-space:nowrap; padding:14px 0; }
+  .ticker-inner { display:inline-flex; animation:ticker 30s linear infinite; }
+  .ticker-item { font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim); padding:0 40px; }
+  .ticker-item span { color:var(--yellow); margin-right:8px; }
+
+  .honest-strip { padding:80px 40px; border-bottom:1px solid #1f1f1f; display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; }
+  .honest-strip h2 { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; letter-spacing:-0.03em; line-height:1.1; }
+  .honest-strip h2 span { color:var(--yellow); }
+  .honest-right p { font-size:0.88rem; line-height:1.8; color:var(--text-dim); margin-bottom:20px; }
+  .honest-right p strong { color:var(--white); }
+  .status-list { margin-top:32px; display:flex; flex-direction:column; gap:12px; }
+  .status-item { display:flex; align-items:center; gap:16px; font-size:0.78rem; color:var(--text-dim); }
+  .status-dot { width:8px; height:8px; background:var(--yellow); flex-shrink:0; }
+  .status-dot.pending { background:transparent; border:1px solid #444; }
+
+  .numbers { padding:80px 40px; background:var(--grey); border-bottom:1px solid #1f1f1f; }
+  .numbers-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:48px; }
+  .number-card { background:var(--black); border:1px solid #1a1a1a; padding:40px 28px; text-align:center; }
+  .number-big { font-family:'Syne',sans-serif; font-size:2.4rem; font-weight:800; color:var(--yellow); margin-bottom:10px; }
+  .number-label { font-size:0.7rem; color:var(--text-dim); line-height:1.5; text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* SUPPORTERS STRIP */
+  .supporters-strip { padding:80px 40px; border-bottom:1px solid #1f1f1f; }
+  .supporters-inner { display:grid; grid-template-columns:1fr 2fr; gap:80px; align-items:start; }
+  .supporters-left h2 { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; letter-spacing:-0.03em; line-height:1.1; margin-bottom:16px; }
+  .supporters-left h2 span { color:var(--yellow); }
+  .supporters-left p { font-size:0.82rem; color:var(--text-dim); line-height:1.7; margin-bottom:24px; }
+  .supporters-counter { margin-bottom:32px; }
+  .counter-num { font-family:'Syne',sans-serif; font-size:3.5rem; font-weight:800; color:var(--yellow); line-height:1; }
+  .counter-label { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim); margin-top:4px; }
+
+  .supporters-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; }
+  .supporter-card { background:var(--grey); border:1px solid #1a1a1a; padding:24px 20px; position:relative; overflow:hidden; transition:border-color 0.2s; }
+  .supporter-card:hover { border-color:#2a2a2a; }
+  .supporter-card.first { border-color:var(--yellow); }
+  .supporter-num { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800; color:var(--yellow); line-height:1; margin-bottom:8px; }
+  .supporter-name { font-size:0.82rem; font-weight:700; color:var(--white); margin-bottom:4px; }
+  .supporter-loc { font-size:0.65rem; color:var(--text-dim); }
+  .supporter-donor { position:absolute; top:12px; right:12px; font-size:0.5rem; letter-spacing:0.1em; text-transform:uppercase; border:1px solid var(--yellow); color:var(--yellow); padding:3px 6px; }
+  .supporter-first-badge { position:absolute; top:12px; right:12px; font-size:0.5rem; letter-spacing:0.1em; text-transform:uppercase; background:var(--yellow); color:var(--black); padding:3px 6px; font-weight:700; }
+
+  .supporters-empty { grid-column:1/-1; padding:40px; border:1px dashed #1a1a1a; text-align:center; }
+  .supporters-empty p { font-size:0.8rem; color:var(--text-dim); line-height:1.8; }
+  .supporters-empty strong { color:var(--white); }
+
+  .supporters-loading { grid-column:1/-1; padding:40px; text-align:center; font-size:0.75rem; color:var(--text-dim); letter-spacing:0.1em; }
+
+  .view-all-link { display:inline-flex; align-items:center; gap:10px; margin-top:20px; font-size:0.72rem; color:var(--text-dim); text-decoration:none; border:1px solid #1a1a1a; padding:12px 20px; transition:border-color 0.2s, color 0.2s; }
+  .view-all-link:hover { border-color:var(--yellow); color:var(--yellow); }
+
+  .found-cta { margin-top:32px; background:var(--grey); border:1px solid #1a1a1a; padding:28px 24px; }
+  .found-cta-tag { font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--yellow); margin-bottom:10px; }
+  .found-cta h3 { font-family:'Syne',sans-serif; font-size:1rem; font-weight:800; letter-spacing:-0.01em; margin-bottom:8px; }
+  .found-cta p { font-size:0.75rem; color:var(--text-dim); line-height:1.6; margin-bottom:16px; }
+  .found-cta-actions { display:flex; gap:10px; }
+
+  .ways { padding:80px 40px; border-bottom:1px solid #1f1f1f; }
+  .ways-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:48px; }
+  .way-card { background:var(--grey); border:1px solid #1f1f1f; padding:40px 32px; transition:border-color 0.2s; }
+  .way-card:hover { border-color:var(--yellow); }
+  .way-icon { font-size:1.4rem; margin-bottom:20px; }
+  .way-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:12px; }
+  .way-desc { font-size:0.78rem; color:var(--text-dim); line-height:1.7; margin-bottom:24px; }
+
+  .cta-banner { padding:100px 40px; text-align:center; border-bottom:1px solid #1f1f1f; position:relative; overflow:hidden; }
+  .cta-banner-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(232,255,71,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(232,255,71,0.02) 1px,transparent 1px); background-size:80px 80px; pointer-events:none; }
+  .cta-banner h2 { font-family:'Syne',sans-serif; font-size:clamp(2rem,5vw,4rem); font-weight:800; letter-spacing:-0.04em; margin-bottom:20px; position:relative; }
+  .cta-banner h2 span { color:var(--yellow); }
+  .cta-banner p { font-size:0.88rem; color:var(--text-dim); max-width:500px; margin:0 auto 40px; line-height:1.7; position:relative; }
+  .cta-actions { display:flex; gap:16px; justify-content:center; position:relative; }
+
+  @media (max-width:768px) {
+    .hero { padding:100px 20px 60px; }
+    .hero-bottom { flex-direction:column; align-items:flex-start; }
+    .hero-actions { align-items:flex-start; }
+    .honest-strip { grid-template-columns:1fr; gap:40px; padding:60px 20px; }
+    .numbers { padding:60px 20px; }
+    .numbers-grid { grid-template-columns:repeat(2,1fr); }
+    .supporters-strip { padding:60px 20px; }
+    .supporters-inner { grid-template-columns:1fr; gap:40px; }
+    .supporters-cards { grid-template-columns:1fr; }
+    .ways { padding:60px 20px; }
+    .ways-grid { grid-template-columns:1fr; }
+    .cta-banner { padding:60px 20px; }
+    .cta-actions { flex-direction:column; align-items:center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">The Havn Project</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="what-we-do.html">What We Do</a></li>
+    <li><a href="found.html">Supporters</a></li>
+    <li><a href="donate.html">Donate</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="donate.html" class="nav-cta">Donate</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <p class="hero-tag">Toronto · Est. 2026 · Youth-led project</p>
+  <h1 class="hero-title">A place<br><span>to land.</span></h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">The Havn Project is a <strong>youth-led project</strong> providing food, essential supplies, and tech to homeless individuals, shelters, and under-resourced schools in Toronto.</p>
+    <div class="hero-actions">
+      <a href="donate.html" class="btn-primary">Support Havn</a>
+      <a href="about.html" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span class="scroll-label">Scroll</span></div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span>→</span> Food & supplies</span>
+    <span class="ticker-item"><span>→</span> Toronto-based</span>
+    <span class="ticker-item"><span>→</span> Youth-led project</span>
+    <span class="ticker-item"><span>→</span> Youth-led project project</span>
+    <span class="ticker-item"><span>→</span> School tech donations</span>
+    <span class="ticker-item"><span>→</span> No fake stats</span>
+    <span class="ticker-item"><span>→</span> Student support</span>
+    <span class="ticker-item"><span>→</span> Built to scale</span>
+    <span class="ticker-item"><span>→</span> Food & supplies</span>
+    <span class="ticker-item"><span>→</span> Toronto-based</span>
+    <span class="ticker-item"><span>→</span> Youth-led project</span>
+    <span class="ticker-item"><span>→</span> Youth-led project project</span>
+    <span class="ticker-item"><span>→</span> School tech donations</span>
+    <span class="ticker-item"><span>→</span> No fake stats</span>
+    <span class="ticker-item"><span>→</span> Student support</span>
+    <span class="ticker-item"><span>→</span> Built to scale</span>
+  </div>
+</div>
+
+<section class="honest-strip">
+  <div>
+    <div class="section-label" style="margin-bottom:24px;">Honest</div>
+    <h2>We just<br><span>started.</span></h2>
+  </div>
+  <div class="honest-right">
+    <p>A lot of organizations plaster fake numbers on their homepage. <strong>We won't do that.</strong> The Havn Project was founded in 2026 by a 13-year-old developer in Toronto. No inflated stats, no paid staff.</p>
+    <p>Every dollar donated goes directly to supplies, shelters, or schools — tracked transparently. When we have real numbers to show, we'll show them.</p>
+    <div class="status-list">
+      <div class="status-item"><div class="status-dot"></div>Stripe donation page — live</div>
+      <div class="status-item"><div class="status-dot"></div>Donation page — live</div>
+      <div class="status-item"><div class="status-dot"></div>Website — live</div>
+      <div class="status-item"><div class="status-dot pending"></div>First school tech donation — planning</div>
+      <div class="status-item"><div class="status-dot pending"></div>First supply drive — planning</div>
+      <div class="status-item"><div class="status-dot pending"></div>Partner shelters — outreach not started</div>
+      
+    </div>
+  </div>
+</section>
+
+<section class="numbers">
+  <div class="section-label">The reality</div>
+  <div class="numbers-grid">
+    <div class="number-card">
+      <div class="number-big">93%</div>
+      <p class="number-label">Of every dollar<br>goes to the mission</p>
+    </div>
+    <div class="number-card">
+      <div class="number-big">$0</div>
+      <p class="number-label">Admin salaries<br>& overhead</p>
+    </div>
+    <div class="number-card">
+      <div class="number-big">1</div>
+      <p class="number-label">Person running<br>everything</p>
+    </div>
+    <div class="number-card">
+      <div class="number-big">100%</div>
+      <p class="number-label">Financial<br>transparency</p>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPORTERS STRIP -->
+<section class="supporters-strip">
+  <div class="section-label">Supporters</div>
+  <div class="supporters-inner">
+    <div class="supporters-left">
+      <h2>People who<br><span>found us.</span></h2>
+      <p>These are the people who found The Havn Project and claimed their spot.</p>
+      <div class="supporters-counter">
+        <div class="counter-num" id="supporterCount">—</div>
+        <div class="counter-label">People found the device</div>
+      </div>
+      <a href="found.html" class="view-all-link">View all supporters →</a>
+
+      <div class="found-cta">
+        <div class="found-cta-tag">Have a code?</div>
+        <h3>Claim your spot on the wall.</h3>
+        <p>If you connected to HAVN somewhere in Toronto, you got a code. Enter it here to take your place in the list.</p>
+        <div class="found-cta-actions">
+          <a href="redeem.html" class="btn-primary" style="font-size:0.72rem;padding:10px 20px;">Redeem code →</a>
+          <a href="found.html" class="btn-ghost" style="font-size:0.72rem;padding:10px 20px;">See the wall</a>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="supporters-cards" id="supportersGrid">
+        <div class="supporters-loading">Loading supporters...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ways">
+  <div class="section-label">Get involved</div>
+  <div class="ways-grid">
+    <div class="way-card">
+      <div class="way-icon">◈</div>
+      <div class="way-title">Donate</div>
+      <p class="way-desc">Every dollar goes directly to supplies, shelters, or schools. Tracked publicly. No administrative bloat.</p>
+      <a href="donate.html" class="btn-primary" style="font-size:0.72rem;padding:10px 20px;">Donate now</a>
+    </div>
+    <div class="way-card">
+      <div class="way-icon">◇</div>
+      <div class="way-title">Volunteer</div>
+      <p class="way-desc">Help with supply drives, school deliveries, or outreach in Toronto. We're building this from scratch — every hand matters.</p>
+      <a href="contact.html" class="btn-ghost" style="font-size:0.72rem;padding:10px 20px;">Get in touch</a>
+    </div>
+    <div class="way-card">
+      <div class="way-icon">○</div>
+      <div class="way-title">Spread the word</div>
+      <p class="way-desc">Share The Havn Project with people who care. More people knowing we exist means more impact. It costs nothing.</p>
+      <a href="https://twitter.com/intent/tweet?text=Check%20out%20The%20Havn%20Project%2C%20a%20youth-led%20project%20in%20Toronto%20helping%20homeless%20individuals%20and%20under-resourced%20schools.%20havn.thealxlabs.ca" target="_blank" class="btn-ghost" style="font-size:0.72rem;padding:10px 20px;">Share on X</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-banner-grid"></div>
+  <h2>Help us build<br><span>something real.</span></h2>
+  <p>The Havn Project is just getting started. Your support — whether it's $5, volunteering an afternoon, or sharing our link — helps us get closer to making a real difference in Toronto.</p>
+  <div class="cta-actions">
+    <a href="donate.html" class="btn-primary">Donate now</a>
+    <a href="about.html" class="btn-ghost">Read our story</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">The Havn Project</div>
+  <div class="footer-note">The Havn Project is a youth-led project in Toronto.<br>Donations processed securely via Stripe. </div>
+  <div class="footer-right">Toronto, Canada<br>Est. 2026</div>
+</footer>
+
+<script>
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function loadSupporters() {
+  const grid = document.getElementById('supportersGrid');
+  const counter = document.getElementById('supporterCount');
+
+  try {
+    const res = await fetch('/api/finders');
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const finders = data.finders || [];
+
+    counter.textContent = finders.length;
+
+    if (finders.length === 0) {
+      grid.innerHTML = `
+        <div class="supporters-empty">
+          <p><strong>Nobody yet.</strong><br>The device is out there in Toronto.<br>Be the first to find it.</p>
+        </div>`;
+      return;
+    }
+
+    // Show latest 6
+    const recent = finders.slice(-6).reverse();
+    grid.innerHTML = recent.map((f, i) => {
+      const isFirst = f.number === 1;
+      const d = new Date(f.timestamp);
+      const dateStr = d.toLocaleDateString('en-CA', { month:'short', day:'numeric' });
+      return `
+        <div class="supporter-card${isFirst ? ' first' : ''}">
+          ${isFirst ? '<div class="supporter-first-badge">First</div>' : ''}
+          ${f.donor && !isFirst ? '<div class="supporter-donor">⬡ Donor</div>' : ''}
+          <div class="supporter-num">#${String(f.number).padStart(4,'0')}</div>
+          <div class="supporter-name">${escapeHtml(f.name)}</div>
+          <div class="supporter-loc">${escapeHtml(f.location || 'Toronto')}</div>
+        </div>`;
+    }).join('');
+
+  } catch(e) {
+    counter.textContent = '—';
+    grid.innerHTML = `<div class="supporters-loading">Could not load supporters.</div>`;
+  }
+}
+
+loadSupporters();
+</script>
+
+</body>
+</html>

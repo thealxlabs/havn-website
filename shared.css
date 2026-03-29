@@ -1,0 +1,113 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --yellow: #e8ff47;
+  --white: #f0f0f0;
+  --grey: #141414;
+  --mid: #2a2a2a;
+  --text-dim: #777;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  border-bottom: 1px solid #1a1a1a;
+  background: rgba(10,10,10,0.96);
+  backdrop-filter: blur(8px);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--yellow);
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--yellow); }
+
+.nav-cta {
+  background: var(--yellow); color: var(--black); border: none;
+  padding: 10px 20px; font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; cursor: crosshair; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.nav-cta:hover { opacity: 0.85; }
+
+.btn-primary {
+  background: var(--yellow); color: var(--black); padding: 14px 28px;
+  font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none;
+  display: inline-block; transition: opacity 0.2s; cursor: crosshair;
+}
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-ghost {
+  border: 1px solid #2a2a2a; color: var(--text-dim); padding: 14px 28px;
+  font-family: 'Space Mono', monospace; font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none;
+  display: inline-block; transition: border-color 0.2s, color 0.2s; cursor: crosshair;
+}
+.btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+.page-header {
+  padding: 160px 40px 80px; border-bottom: 1px solid #1a1a1a;
+  position: relative; overflow: hidden;
+}
+.page-header-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(232,255,71,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(232,255,71,0.025) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none;
+}
+.page-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.5s ease 0.1s forwards; }
+.page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.5rem, 7vw, 6rem); letter-spacing: -0.04em; line-height: 0.95; opacity: 0; animation: fadeUp 0.5s ease 0.2s forwards; }
+.page-title span { color: var(--yellow); }
+.page-subtitle { margin-top: 24px; font-size: 0.88rem; color: var(--text-dim); max-width: 480px; line-height: 1.7; opacity: 0; animation: fadeUp 0.5s ease 0.3s forwards; }
+
+.section-label {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--yellow); margin-bottom: 48px; display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: #1a1a1a; max-width: 200px; }
+
+footer {
+  padding: 60px 40px; border-top: 1px solid #1a1a1a;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+}
+.footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--yellow); text-decoration: none; flex-shrink: 0; }
+.footer-note { font-size: 0.7rem; color: var(--text-dim); line-height: 1.7; text-align: center; }
+.footer-note a { color: var(--yellow); text-decoration: none; }
+.footer-note a:hover { text-decoration: underline; }
+.footer-right { font-size: 0.7rem; color: #333; text-align: right; flex-shrink: 0; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .page-header { padding: 120px 20px 60px; }
+  footer { flex-direction: column; text-align: center; padding: 40px 20px; }
+  .footer-right { text-align: center; }
+}
